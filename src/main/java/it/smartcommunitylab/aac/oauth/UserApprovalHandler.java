@@ -75,7 +75,11 @@ public class UserApprovalHandler extends TokenServicesUserApprovalHandler {
 		// or trusted client
 		if (authorizationRequest.getAuthorities() != null) {
 			for (GrantedAuthority ga : authorizationRequest.getAuthorities())
-				if (Config.AUTHORITY.ROLE_CLIENT_TRUSTED.toString().equals(ga.getAuthority())) return true;
+				if (Config.AUTHORITY.ROLE_CLIENT_TRUSTED.toString().equals(ga.getAuthority())
+						// suppress authorization access confirmation for ROLE_CLIENT.
+						| Config.AUTHORITY.ROLE_CLIENT.toString().equals(ga.getAuthority())) { 
+					return true;
+				}
 		}
 		// or test token redirect uri
 		// or accesses only own resources

@@ -63,8 +63,4 @@
       <!-- <authority name="facebooklocal" attribute="email"/> -->
       <authority name="internal" attribute="email"/>
       </authorityMatching>
-   <authorityMatching>
-      <authority name="facebook" attribute="id"/>
-      <authority name="facebooklocal" attribute="id"/>
-  </authorityMatching>
 </authorities>
