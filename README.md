@@ -69,6 +69,10 @@ where **authority** stands for *google* or *facebook*, **attrkey** stands for id
 </code> 
 
 associates the role *admin* to the user with email abc@gmail.com if authenticated with Google account.
+
+**Support Email**
+indicates the support email address to be contacted in case of error or administration issues. This email
+will be displayed on error pages.
    
 ## Usage Scenarios
 

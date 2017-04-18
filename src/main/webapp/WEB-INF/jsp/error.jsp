@@ -18,6 +18,8 @@
 <%@page import="java.util.Map"%>
 <%@page contentType="text/html" pageEncoding="UTF8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setBundle basename="resources.internal" var="res" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,18 +30,20 @@
 <title>Error</title>
 </head>
 <body>
+
+	<%@ page language="java" import="java.util.*"%>
+	<%@ page import="java.util.ResourceBundle"%>
+	<%
+		ResourceBundle resource = ResourceBundle.getBundle("commoncore");
+		String email = resource.getString("support.email");
+	%>
 	<img class="logo" src="/aac/img/ls_logo.png" alt="SmartCommunity" />
 	<div class="clear"></div>
 	<div class="authorities">
-		<p>An error has occurred while processing you request. Please contact the administrator.</p>
+		<p>
+			<fmt:message bundle="${res}" key="error_error" />
+			<%=email%>
+		</p>
 	</div>
-	
-	<!--
-    Failed URL: ${url}
-    Exception:  ${exception.message}
-        <c:forEach items="${exception.stackTrace}" var="ste">    
-        ${ste} 
-    </c:forEach>
-    -->
 </body>
 </html>

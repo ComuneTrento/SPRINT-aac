@@ -41,6 +41,7 @@ class GlobalDefaultExceptionHandler implements HandlerExceptionResolver, Ordered
 	        Object aHandler, Exception anExc
 	    ) {
 	        // Otherwise setup and send the user to a default error-view.
+	    	anExc.printStackTrace();
 	        ModelAndView mav = new ModelAndView();
 	        mav.addObject("exception", anExc);
 	        mav.addObject("url", aReq.getRequestURL());
