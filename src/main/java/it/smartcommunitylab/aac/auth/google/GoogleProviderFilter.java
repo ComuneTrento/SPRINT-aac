@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,6 +15,8 @@ public class GoogleProviderFilter extends OncePerRequestFilter {
 
 	@Value("${application.url}")
 	private String applicationURL;
+	@Value("${mode.reauth}")
+	private boolean reauth;	
 
 	@Override
 	public void destroy() {
@@ -26,7 +29,7 @@ public class GoogleProviderFilter extends OncePerRequestFilter {
 
 		String loggedWithGoogle = (String) request.getSession().getAttribute(
 				GoogleAuthHelper.SESSION_GOOGLE_CHECK);
-		if (loggedWithGoogle == null) {
+		if (loggedWithGoogle == null || (reauth && StringUtils.isEmpty( request.getParameter("OIDC_CLAIM_email")))) {
 			response.sendRedirect(applicationURL + "/auth/google-oauth");
 		} else {
 			filterChain.doFilter(request, response);
