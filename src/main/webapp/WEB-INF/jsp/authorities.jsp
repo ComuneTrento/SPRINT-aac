@@ -112,7 +112,8 @@ a.link {
 							class="btn btn-default" />
 					</div>
 					<%
-						if (request.getSession().getAttribute("userAbsent") != null) {
+						if (request.getSession().getAttribute("userAbsent") != null
+						&& (String.valueOf(request.getSession().getAttribute("userAbsent")).equalsIgnoreCase("true"))) {
 					%>
 					<div>
 						<label style="color: red;"> <fmt:message bundle="${res}"
