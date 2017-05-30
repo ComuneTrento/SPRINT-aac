@@ -72,7 +72,8 @@
                 </div>
                 <div class="col-md-12 form-group">
                   <button class="btn btn-primary"><fmt:message bundle="${res}" key="lbl_reg_btn" /></button>
-                  <a class="btn" href="login"><fmt:message bundle="${res}" key="lbl_cancel" /></a>
+                  <%-- <a class="btn" href="login"><fmt:message bundle="${res}" key="lbl_cancel" /></a> --%>
+                  <a class="btn" href="authorities"><fmt:message bundle="${res}" key="lbl_cancel" /></a>
                 </div>
                 <div>&nbsp;</div>
             </form:form>

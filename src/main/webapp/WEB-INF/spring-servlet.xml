@@ -27,6 +27,9 @@
     <!-- Scan controllers in this package -->
     <context:component-scan
         base-package="it.smartcommunitylab.aac" />
+        
+     <!--  Configuration -->
+    <context:property-placeholder location="classpath:commoncore.properties" />
     
     <!-- REST SERVICES EXPOSED BY THE AAC -->
     <sec:http pattern="/basicprofile/**"  create-session="never" entry-point-ref="clientAuthenticationEntryPoint" >
@@ -270,7 +273,8 @@
     <bean id="internalProviderFilterBean" class="it.smartcommunitylab.aac.auth.internal.InternalRegFilter"/>
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
-        <property name="defaultLocale" value="it" />
+        <!--<property name="defaultLocale" value="it" />-->
+        <property name="defaultLocale" value="${defaultLocale}" />
     </bean>
 
 		<bean id="templateEngine" class="org.thymeleaf.TemplateEngine">

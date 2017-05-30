@@ -52,7 +52,7 @@
                 <div class="col-md-12 form-group"><label> <fmt:message bundle="${res}" key="lbl_user" />: </label><input class="form-control" type="text" name="username"/></div>
                 <div class="col-md-12 form-group">
                   <button class="btn btn-primary"><fmt:message bundle="${res}" key="lbl_reset_btn" /></button>
-                  <a class="btn" href="login"><fmt:message bundle="${res}" key="lbl_cancel" /></a>
+                  <a class="btn" href="authorities"><fmt:message bundle="${res}" key="lbl_cancel" /></a>
                 </div>  
                 <div>&nbsp;</div>
             </form>

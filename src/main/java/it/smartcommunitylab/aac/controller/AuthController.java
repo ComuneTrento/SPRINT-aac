@@ -93,7 +93,7 @@ public class AuthController extends AbstractController {
 		
 		String target = prepareRedirect(req, "/admin");
 		req.getSession().setAttribute("redirect", target);
-
+		req.getSession().setAttribute("authorities", authorities);
 //		if (authorities.size() == 1) {
 //			return new ModelAndView("redirect:/eauth/"
 //					+ authorities.keySet().iterator().next());
@@ -118,7 +118,7 @@ public class AuthController extends AbstractController {
 
 		String target = prepareRedirect(req, "/dev");
 		req.getSession().setAttribute("redirect", target);
-
+		req.getSession().setAttribute("authorities", authorities);
 //		if (authorities.size() == 1) {
 //			return new ModelAndView("redirect:/eauth/"
 //					+ authorities.keySet().iterator().next());
@@ -142,6 +142,7 @@ public class AuthController extends AbstractController {
 				.getWebAuthorityUrls();
 		String target = prepareRedirect(req, "/sso");
 		req.getSession().setAttribute("redirect", target);
+		req.getSession().setAttribute("authorities", authorities);
 		if (authorities.size() == 1) {
 			return new ModelAndView("redirect:/eauth/"
 					+ authorities.keySet().iterator().next());
@@ -164,6 +165,7 @@ public class AuthController extends AbstractController {
 				.getWebAuthorityUrls();
 		String target = prepareRedirect(req, "/cas/loginsuccess");
 		req.getSession().setAttribute("redirect", target);
+		req.getSession().setAttribute("authorities", authorities);
 		if (authorities.size() == 1) {
 			return new ModelAndView("redirect:/eauth/"
 					+ authorities.keySet().iterator().next());
@@ -225,6 +227,7 @@ public class AuthController extends AbstractController {
 					+ resultAuthorities.keySet().iterator().next());
 		}
 		model.put("authorities", resultAuthorities);
+		req.getSession().setAttribute("authorities", resultAuthorities);
 
 		return new ModelAndView("authorities", model);
 	}

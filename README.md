@@ -205,3 +205,40 @@ A successful response is returned as a JSON object, similar to the following:
     "scope": "profile.basicprofile.all"      
     
     
+**2.3. Internationalization**
+In order to adapt AAC in different language, it is required to configure the parameter (default_locale)
+inside commoncore.properties file
+
+	# default locale.
+	defaultLocale=it
+
+The resource strings for selected locale can be defined inside resources folder
+
+	internal_it.properties
+	
+(Optional) to be used with Internal Login feature. One can also create internal login account registration, password recovery  templates in different languages following the existing ones inside folder:
+
+	src/main/resources/templates
+	
+
+**2.4. Internal Login (Optional)**
+
+Additional internal login can be activated by setting the parameter(internal.account.enabled) inside
+commoncore.properties file:
+
+	# internal account.
+	internal.account.enabled=true
+
+This allow enabling of internal account management facility. The functionality requires configruation of
+mail sender configuration inside the commoncore.properties file. With this configuration parameters, one can specify the principal account to be used for sending email on account registration and password recovery:
+
+	# smtp configuration(with internal account enabled).
+	mail.username=<email>
+	mail.password=<pass>
+	mail.host=smtp.gmail.com
+	mail.port=587
+	mail.protocol=smtp
+	
+
+
+specify the email account

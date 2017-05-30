@@ -68,6 +68,12 @@ public class RegistrationController {
 		return "registration/login";
 	}
 	
+	@RequestMapping("/authorities")
+	public String authPage(Model model, HttpServletRequest req) {
+		model.addAttribute("authorities", req.getSession().getAttribute("authorities"));
+		return "authorities";
+	}
+	
 	/**
 	 * Login the user 
 	 * 
@@ -86,25 +92,36 @@ public class RegistrationController {
 	{
 		try {
 			Registration user = manager.getUser(username, password);
-			String targetEnc = null;
-			try {
-				targetEnc = URLEncoder.encode((String) req.getSession()
-						.getAttribute("redirect"), "UTF8");
-			} catch (UnsupportedEncodingException e) {
-				throw new RegistrationException(e);
+			if (user != null) {
+				// clear the error flag from session.
+				req.getSession().setAttribute("userAbsent", "false");
+				
+				String targetEnc = null;
+				try {
+					targetEnc = URLEncoder.encode((String) req.getSession()
+							.getAttribute("redirect"), "UTF8");
+				} catch (UnsupportedEncodingException e) {
+					throw new RegistrationException(e);
+				}
+				req.getSession().setAttribute(
+						InternalRegFilter.SESSION_INTERNAL_CHECK, "true");
+				String redirect = String
+						.format("redirect:/eauth/internal?target=%s&email=%s&name=%s&surname=%s",
+								targetEnc,
+								user.getEmail(), 
+								user.getName(),
+								user.getSurname());;
+				return redirect;	
+			} else {
+				req.getSession().setAttribute("userAbsent", "true");
+				model.addAttribute("authorities", req.getSession().getAttribute("authorities"));
+				return "authorities";
 			}
-			req.getSession().setAttribute(
-					InternalRegFilter.SESSION_INTERNAL_CHECK, "true");
-			String redirect = String
-					.format("redirect:/eauth/internal?target=%s&email=%s&name=%s&surname=%s",
-							targetEnc,
-							user.getEmail(), 
-							user.getName(),
-							user.getSurname());;
-			return redirect;
 		} catch (RegistrationException e) {
+			req.getSession().setAttribute("userAbsent", "true");
 			model.addAttribute("error", e.getClass().getSimpleName());
-			return "registration/login";
+			model.addAttribute("authorities", req.getSession().getAttribute("authorities"));
+			return "authorities";
 		}
 	}
 	/**
@@ -252,6 +269,7 @@ public class RegistrationController {
 		}
 		return "registration/resetsuccess";
 	}
+	
 	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
 	public String changePwd(Model model, 
 			@ModelAttribute("reg") @Valid RegistrationBean reg,
