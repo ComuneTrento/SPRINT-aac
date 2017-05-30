@@ -219,7 +219,7 @@ The resource strings for selected locale can be defined inside resources folder 
 	internal_en.properties
 	internal_es.properties
 	
-Please make sure to provide translation of all the available strings in the internal_<lang>.properites file.
+Please make sure to provide translation of all the available strings in the internal_\<lang\>.properites file.
 
 (Optional) to be used with Internal Login feature. One can also create internal login account registration, password recovery  templates in different languages following the existing ones inside folder:
 
@@ -244,6 +244,3 @@ mail sender configuration inside the commoncore.properties file. With this confi
 	mail.port=587
 	mail.protocol=smtp
 	
-
-
-specify the email account
