@@ -46,7 +46,7 @@
       <identifyingAttributes>id</identifyingAttributes>
   </authorityMapping>
  -->  
- <authorityMapping name="internal" url="internal" public="false" web="false"  useParams="true">
+ <authorityMapping name="internal" url="internal" web="false"  useParams="true">
       <attributes alias="it.smartcommunitylab.aac.givenname">name</attributes>
       <attributes alias="it.smartcommunitylab.aac.surname">surname</attributes>
       <attributes>email</attributes>
