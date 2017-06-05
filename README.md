@@ -62,7 +62,7 @@ The development console (/aac/dev) is used to configure AAC OAuth2 client applic
  < authority>;< attrkey>;< attrvalue>;< role>
 </code> 
 
-where **authority** stands for *google* or *facebook*, **attrkey** stands for identity attribute for that authority (*OIDC_CLAIM_email* and *id* for Google and Facebook respectively), **attrvalue** defines the value of the attribute, and **role** defines the possible role (one of *admin* or *developer*). For example,
+where **authority** stands for *google*, *facebook* or *internal*; **attrkey** stands for identity attribute for that authority (*OIDC_CLAIM_email* for Google, *id* for d Facebook, and *email* for internal logn respectively), **attrvalue** defines the value of the attribute, and **role** defines the possible role (one of *admin* or *developer*). For example,
 
 <code>
   google;OIDC_CLAIM_email;abc@gmail.com;admin
@@ -89,7 +89,7 @@ To do this
 - Login with authorized account (see access configuration above);
 - Click *New App* and specify the corresponding client name
 - In the *Settings* tab check *Server-side* and *Browser access* and select the identity providers to be used 
- for user authentication (e.g., google). Specify also a list of allowed redirect addresses (comma separated).
+ for user authentication (e.g., google, internal, or facebook). Specify also a list of allowed redirect addresses (comma separated).
 - In the *Permissions* tab select *Basic profile service* and check *profile.basicprofile.me* and 
  *profile.accountprofile.me* scopes. These scopes are necessary to obtain the information of the currently signed 
  user using AAC API.
@@ -140,9 +140,7 @@ the scenario relies on the use of OAuth2 protocol. The two cases are considered 
 - The protected resources deal with user-related data or operation. For example, in case the access to the user
 profile is performed, access to CDV is performed on behalf of a specific user, etc. In this case (according to OAuth2), the access to the API should be accompanied with the *Authorization* header that contains the access token obtained via Implicit Flow (or via Authorization Code Flow).
 
-- The protected resource does not deal with user-related data or operation and is not performed client-side. In this case, the access to the API should 
-  also be accompanied with the *Authorization* header that contains the access token obtained via OAuth2 client  
-  credentials flow.
+- The protected resource does not deal with user-related data or operation and is not performed client-side. In this case, the access to the API should also be accompanied with the *Authorization* header that contains the access token obtained via OAuth2 client credentials flow.
   
 The protected resource will use the OAuth2 token and dedicated AAC endpoints to ensure that the token is valid and (in case of user-related data) to verify user identity.  If the token is not provided or it is not valid, the protected resource should return 401 (Unauthorized) error to the caller. 
 
@@ -205,7 +203,7 @@ A successful response is returned as a JSON object, similar to the following:
     "scope": "profile.basicprofile.all"      
     
     
-**2.3. Internationalization**
+### 3. Internationalization
 
 In order to adapt AAC in different language, it is required to configure the parameter (default_locale)
 inside commoncore.properties file
@@ -226,7 +224,7 @@ Please make sure to provide translation of all the available strings in the inte
 	src/main/resources/templates
 	
 
-**2.4. Internal Login (Optional)**
+### 4. Internal Login (Optional)
 
 Additional internal login can be activated by setting the parameter(internal.account.enabled) inside
 commoncore.properties file:
@@ -243,4 +241,10 @@ mail sender configuration inside the commoncore.properties file. With this confi
 	mail.host=smtp.gmail.com
 	mail.port=587
 	mail.protocol=smtp
-	
+
+Default implementation requires the newly registered user to confirm the registration by clicking 
+the link in the confirmation mail. To confirm the users without this step, one can perform direct DB
+update:
+
+    UPDATE registration SET confirmed = 1
+ 	
