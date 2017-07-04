@@ -131,7 +131,6 @@ a.link {
 			}
 		%>
 
-		<p>Please choose the provider for your login</p>
 		<ul class="pprovider">
 			<%
 				for (String s : authorities.keySet()) {

@@ -222,12 +222,12 @@ public class AuthController extends AbstractController {
 		req.getSession().setAttribute("redirect", target);
 		req.getSession().setAttribute("client_id", clientId);
 
+		req.getSession().setAttribute("authorities", resultAuthorities);
 		if (resultAuthorities.size() == 1) {
 			return new ModelAndView("redirect:/eauth/"
 					+ resultAuthorities.keySet().iterator().next());
 		}
 		model.put("authorities", resultAuthorities);
-		req.getSession().setAttribute("authorities", resultAuthorities);
 
 		return new ModelAndView("authorities", model);
 	}
@@ -261,6 +261,7 @@ public class AuthController extends AbstractController {
 		String target = prepareRedirect(req, "/oauth/authorize");
 		req.getSession().setAttribute("redirect", target);
 		req.getSession().setAttribute("client_id", clientId);
+		req.getSession().setAttribute("authorities", Collections.singletonMap(authority, authority));
 
 		return new ModelAndView("redirect:/eauth/" + authority);
 	}
