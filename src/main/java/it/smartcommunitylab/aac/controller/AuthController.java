@@ -15,14 +15,8 @@
  */
 package it.smartcommunitylab.aac.controller;
 
-import it.smartcommunitylab.aac.manager.AttributesAdapter;
-import it.smartcommunitylab.aac.manager.ClientDetailsManager;
-import it.smartcommunitylab.aac.manager.ProviderServiceAdapter;
-import it.smartcommunitylab.aac.repository.UserRepository;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,6 +49,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import it.smartcommunitylab.aac.manager.AttributesAdapter;
+import it.smartcommunitylab.aac.manager.ClientDetailsManager;
+import it.smartcommunitylab.aac.manager.ProviderServiceAdapter;
+import it.smartcommunitylab.aac.repository.UserRepository;
 
 /**
  * Controller for developer console entry points
@@ -327,6 +326,7 @@ public class AuthController extends AbstractController {
 			if (!authorityUrl.equals(old.getDetails()) || reauth == true) {
 	            new SecurityContextLogoutHandler().logout(req, res, old);
 		        SecurityContextHolder.getContext().setAuthentication(null);
+		        //req.getSession().invalidate();
 
 				req.getSession().setAttribute("redirect", target);
 				req.getSession().setAttribute("client_id", clientId);
