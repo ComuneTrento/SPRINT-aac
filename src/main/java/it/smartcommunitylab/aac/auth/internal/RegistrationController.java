@@ -106,11 +106,9 @@ public class RegistrationController {
 				req.getSession().setAttribute(
 						InternalRegFilter.SESSION_INTERNAL_CHECK, "true");
 				String redirect = String
-						.format("redirect:/eauth/internal?target=%s&email=%s&name=%s&surname=%s",
+						.format("redirect:/eauth/internal?target=%s&email=%s",
 								targetEnc,
-								user.getEmail(), 
-								user.getName(),
-								user.getSurname());;
+								user.getEmail());;
 				return redirect;	
 			} else {
 				req.getSession().setAttribute("userAbsent", "true");

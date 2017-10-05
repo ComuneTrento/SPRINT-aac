@@ -237,6 +237,9 @@
               <entry key="facebooklocal">
                   <bean id="facebookLocalAuthorityHandler" class="it.smartcommunitylab.aac.authority.FBAuthorityHandler"/>
               </entry>
+              <entry key="internal">
+                  <bean id="internalAuthorityHandler" class="it.smartcommunitylab.aac.authority.InternalAuthorityHandler"/>
+              </entry>
 	            <entry key="anonymous">
                   <bean id="anonymousAuthorityHandler" class="it.smartcommunitylab.aac.authority.AnonymousAuthorityHandler"/>
               </entry>

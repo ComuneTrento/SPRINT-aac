@@ -229,7 +229,7 @@ public class RegistrationManager {
 		return existing;
 	}
 	
-	private Registration getUserByEmail(String email) {
+	public Registration getUserByEmail(String email) {
 		return repository.findByEmail(email);
 	}
 	private Registration getUserByToken(String confirmationToken) {
@@ -269,6 +269,5 @@ public class RegistrationManager {
 		String subject = messageSource.getMessage("reset.subject", null, Locale.forLanguageTag(reg.getLang()));
 		sender.sendEmail(reg.getEmail(), "reset_"+lang, subject, vars);
 	}
-
 
 }
