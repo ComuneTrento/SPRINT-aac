@@ -15,8 +15,11 @@
  */
 package it.smartcommunitylab.aac.manager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,18 +29,24 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import it.smartcommunitylab.aac.Config;
+import it.smartcommunitylab.aac.auth.fb.FBController;
+import it.smartcommunitylab.aac.common.PasswordHash;
 import it.smartcommunitylab.aac.model.Attribute;
 import it.smartcommunitylab.aac.model.Authority;
+import it.smartcommunitylab.aac.model.Registration;
 import it.smartcommunitylab.aac.model.SocialEngineException;
 import it.smartcommunitylab.aac.model.User;
 import it.smartcommunitylab.aac.repository.AttributeRepository;
 import it.smartcommunitylab.aac.repository.AuthorityRepository;
+import it.smartcommunitylab.aac.repository.RegistrationRepository;
 import it.smartcommunitylab.aac.repository.UserRepository;
 
 /**
@@ -56,6 +65,11 @@ public class ProviderServiceAdapter {
 	private UserRepository userRepository;
 	@Autowired
 	private AttributeRepository attributeRepository;
+	@Autowired
+	private RegistrationRepository repository;
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(ProviderServiceAdapter.class);
 
 	private SocialEngine socialEngine = new DefaultSocialEngine();
 	
@@ -63,8 +77,53 @@ public class ProviderServiceAdapter {
 	@PostConstruct
 	private void init() throws JAXBException, IOException {
 		attrAdapter.init();
+		try {
+			loadDefaultUsers();
+		} catch (Exception e) {
+			// no dummy users, ok
+		}
 	}
 
+	/**
+	 * @throws IOException 
+	 * 
+	 */
+	private void loadDefaultUsers() throws IOException {
+		//
+		BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/users.csv")));
+		String line = reader.readLine(); // skip first line
+		while ((line = reader.readLine()) != null) {
+			String[] arr = StringUtils.commaDelimitedListToStringArray(line);
+			
+			if (arr.length != 10) continue;
+			
+			if (repository.findByEmail(arr[6]) == null) {
+				Registration reg = new Registration();
+				try {
+					reg.setName(arr[3]);
+					reg.setSurname(arr[4]);
+					reg.setEmail(arr[6]);
+					reg.setConfirmed(true);
+					reg.setPassword(PasswordHash.createHash(arr[2]));
+					repository.save(reg);
+
+					User globalUser = updateUser("internal", toMap(reg), null);
+					reg.setUserId(""+globalUser.getId());
+
+					repository.save(reg);
+				} catch (Exception e) {
+					logger.error(e.getMessage(), e);
+				}
+			}
+		}
+	}
+	private Map<String, String> toMap(Registration existing) {
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("name", existing.getName());
+		map.put("surname", existing.getSurname());
+		map.put("email", existing.getEmail());
+		return map;
+	}
 	/**
 	 * Updates of user attributes using the values obtained from http request
 	 * 

@@ -226,8 +226,12 @@ public class AuthController extends AbstractController {
 			return new ModelAndView("redirect:/eauth/"
 					+ resultAuthorities.keySet().iterator().next());
 		}
-		model.put("authorities", resultAuthorities);
+		Authentication old = SecurityContextHolder.getContext().getAuthentication();
+		if (old != null && old instanceof UsernamePasswordAuthenticationToken && !reauth) {
+			return new ModelAndView("redirect:/eauth/" + old.getDetails());
+		}
 
+		model.put("authorities", resultAuthorities);
 		return new ModelAndView("authorities", model);
 	}
 
