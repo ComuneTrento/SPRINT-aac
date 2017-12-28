@@ -43,7 +43,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import it.smartcommunitylab.aac.controller.BasicProfileController;
+import it.smartcommunitylab.aac.controller.AccountProfileController;
 import it.smartcommunitylab.aac.manager.ProviderServiceAdapter;
 import it.smartcommunitylab.aac.profile.model.AccountProfile;
 import it.smartcommunitylab.aac.profile.model.AccountProfiles;
@@ -76,7 +76,7 @@ public class TestAccountProfileService {
 	private it.smartcommunitylab.aac.model.User user;
 	
 	@Autowired
-	private BasicProfileController controller;
+	private AccountProfileController controller;
 
 	@Before
     public void setUp() {
