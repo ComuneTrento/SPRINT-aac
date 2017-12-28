@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  ******************************************************************************/
-package it.smartcommunitylab.aac.test;
+package it.smartcommunitylab.aac.test.component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +49,7 @@ public class AuthorityMappingTest {
 
 	@Before
 	public void init() {
-		List<User> users = userRepository.findByFullNameLike("mario rossi");
+		List<User> users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
 		if (users != null) {
 			userRepository.delete(users);
 		}
@@ -58,27 +58,28 @@ public class AuthorityMappingTest {
 	@Test
 	public void testUsers() {
 		MockHttpServletRequest req = new MockHttpServletRequest();
-		req.addParameter("openid.ext1.value.name", "mario");
-		req.addParameter("openid.ext1.value.surname", "rossi");
-		req.addParameter("openid.ext1.value.email", "mario.rossi@gmail.com");
+		req.addParameter("OIDC_CLAIM_given_name", "mario");
+		req.addParameter("OIDC_CLAIM_family_name", "rossi");
+		req.addParameter("OIDC_CLAIM_email", "mario.rossi@gmail.com");
 		
 		providerServiceAdapter.updateUser("google", new HashMap<String, String>(), req);
-		List<User> users = userRepository.findByFullNameLike("mario rossi");
+		List<User> users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
 		Assert.assertNotNull(users);
 		Assert.assertEquals(1, users.size());
 		
-		providerServiceAdapter.updateUser("googlelocal", new HashMap<String, String>(), req);
-		users = userRepository.findByFullNameLike("mario rossi");
+		// repeating update
+		providerServiceAdapter.updateUser("google", new HashMap<String, String>(), req);
+		users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
 		Assert.assertNotNull(users);
 		Assert.assertEquals(1, users.size());
-		
+
 		req = new MockHttpServletRequest();
-		req.addParameter("openid.ext1.value.name", "mario");
-		req.addParameter("openid.ext1.value.surname", "rossi");
-		req.addParameter("openid.ext1.value.email", "mario.rossi2@gmail.com");
+		req.addParameter("OIDC_CLAIM_given_name", "mario");
+		req.addParameter("OIDC_CLAIM_family_name", "rossi");
+		req.addParameter("OIDC_CLAIM_email", "mario.rossi2@gmail.com");
 		
 		providerServiceAdapter.updateUser("google", new HashMap<String, String>(), req);
-		users = userRepository.findByFullNameLike("mario rossi");
+		users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
 		Assert.assertNotNull(users);
 		Assert.assertEquals(2, users.size());
 

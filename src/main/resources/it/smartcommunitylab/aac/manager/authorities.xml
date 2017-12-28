@@ -31,36 +31,16 @@
       <attributes>email</attributes>
       <identifyingAttributes>id</identifyingAttributes>
   </authorityMapping>
-<!--   <authorityMapping name="googlelocal" url="googlelocal" public="true" web="false">
-      <attributes alias="it.smartcommunitylab.aac.givenname">given_name</attributes>
-      <attributes alias="it.smartcommunitylab.aac.surname">family_name</attributes>
-      <attributes>email</attributes>
-      <attributes>name</attributes>
-      <attributes>link</attributes>
-      <identifyingAttributes>id</identifyingAttributes>
-  </authorityMapping>
-  <authorityMapping name="facebooklocal" url="facebooklocal" public="true" web="false">
-      <attributes alias="it.smartcommunitylab.aac.givenname">first_name</attributes>
-      <attributes alias="it.smartcommunitylab.aac.surname">last_name</attributes>
-      <attributes>email</attributes>
-      <identifyingAttributes>id</identifyingAttributes>
-  </authorityMapping>
- -->  
  <authorityMapping name="internal" url="internal" public="true" web="true"  useParams="true">
       <attributes alias="it.smartcommunitylab.aac.givenname">name</attributes>
       <attributes alias="it.smartcommunitylab.aac.surname">surname</attributes>
       <attributes>email</attributes>
       <identifyingAttributes>email</identifyingAttributes>
   </authorityMapping>
-<!--   <authorityMapping name="anonymous" url="anonymous" public="true" web="false">
-      <identifyingAttributes>externalId</identifyingAttributes>
-  </authorityMapping>
- -->
+
   <authorityMatching>
       <authority name="google" attribute="OIDC_CLAIM_email"/>
-      <!-- <authority name="googlelocal" attribute="email"/> -->
       <authority name="facebook" attribute="email"/>
-      <!-- <authority name="facebooklocal" attribute="email"/> -->
       <authority name="internal" attribute="email"/>
       </authorityMatching>
 </authorities>

@@ -30,7 +30,8 @@ import it.smartcommunitylab.aac.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
 
-	List<User> findByFullNameLike(String text);
+	List<User> findByFullNameIgnoreCaseLike(String text);
+	
 	User findBySocialId(String socialId);
 	
 	@Query("select u from User u left join u.attributeEntities a where a.authority.name=?1 and a.key=?2 and a.value=?3")

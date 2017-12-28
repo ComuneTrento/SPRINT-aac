@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
@@ -33,9 +32,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import it.smartcommunitylab.aac.oauth.ResourceServices;
-import it.smartcommunitylab.aac.repository.ClientDetailsRepository;
 
 /**
  * Controller for remote check the access to the resource
@@ -48,11 +44,7 @@ public class ResourceAccessController {
 
 	private static Log logger = LogFactory.getLog(ResourceAccessController.class);
 	@Autowired
-	private ResourceServices resourceServices;
-	@Autowired
 	private ResourceServerTokenServices resourceServerTokenServices;
-	@Autowired
-	private ClientDetailsRepository clientDetailsRepository;
 	
 	private static ResourceFilterHelper resourceFilterHelper = new ResourceFilterHelper();
 
@@ -73,7 +65,7 @@ public class ResourceAccessController {
 			if (actualScope != null && !actualScope.isEmpty() && actualScope.containsAll(scopeSet)) {
 				return true;
 			}
-		} catch (AuthenticationException e) {
+		} catch (Exception e) {
 			logger.error("Error validating token: "+e.getMessage());
 		}
 		return false;

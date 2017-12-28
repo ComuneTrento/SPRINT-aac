@@ -17,6 +17,7 @@
 package it.smartcommunitylab.aac.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -49,15 +50,23 @@ public class AbstractController {
 	 * Get the user from the Spring Security Context
 	 * @return
 	 */
-	protected UserDetails getUser(){
-		return (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	protected UserDetails getUser() {
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		if (a != null) {
+			return (UserDetails)a.getPrincipal();
+		}
+		return null;
 	}
 	
 	/**
 	 * @return the user ID (long) from the user object in Spring Security Context
 	 */
 	protected Long getUserId() {
-		return Long.parseLong(getUser().getUsername());
+		UserDetails user = getUser();
+		if (user != null && user.getUsername() != null) {
+			return Long.parseLong(getUser().getUsername());
+		}
+		return null;
 	}
 
 	/**

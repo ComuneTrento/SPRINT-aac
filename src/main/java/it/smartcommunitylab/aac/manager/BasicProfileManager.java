@@ -77,7 +77,7 @@ public class BasicProfileManager {
 	 */
 	public List<BasicProfile> getUsers(String fullNameFilter) {
 		try {
-			return BasicProfileConverter.toBasicProfile(userRepository.findByFullNameLike("%"+fullNameFilter+"%"));
+			return BasicProfileConverter.toBasicProfile(userRepository.findByFullNameIgnoreCaseLike("%"+fullNameFilter+"%"));
 		} catch (Exception e) {
 			throw new IllegalStateException("Problem reading users: "+e.getMessage());
 		}

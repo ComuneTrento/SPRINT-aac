@@ -26,23 +26,65 @@
 	<mvc:annotation-driven />
 
 	<!-- Scan controllers in this package -->
-	<context:component-scan base-package="it.smartcommunitylab.aac.manager" />
+	<context:component-scan base-package="it.smartcommunitylab.aac.manager,it.smartcommunitylab.aac.controller" />
 
-	<bean id="resourceStorage" class="it.smartcommunitylab.aac.oauth.CachedResourceStorage"/>
-  
+	<bean id="resourceStorage" class="it.smartcommunitylab.aac.oauth.CachedResourceStorage" />
+
+	<!-- default authority handler -->
+	<bean id="defaultHandler"
+		class="it.smartcommunitylab.aac.authority.DefaultAuthorityHandler">
+		<constructor-arg value="false"></constructor-arg>
+	</bean>
+
+    <bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService">
+        <constructor-arg ref="dataSource" />
+        <property name="rowMapper">
+            <bean class="it.smartcommunitylab.aac.model.ClientDetailsRowMapper"/>
+        </property>
+    </bean>
+    <bean id="tokenServices"
+        class="it.smartcommunitylab.aac.oauth.NonRemovingTokenServices">
+        <property name="tokenStore" ref="tokenStore" />
+        <property name="supportRefreshToken" value="true" />
+        <property name="reuseRefreshToken" value="true" />
+        <property name="clientDetailsService" ref="clientDetails" />
+    </bean>
+    <bean id="tokenStore" class="it.smartcommunitylab.aac.oauth.AutoJdbcTokenStore">
+        <constructor-arg ref="dataSource" />
+    </bean>
+            
+
 	<bean id="authorityHandlerContainer"
 		class="it.smartcommunitylab.aac.authority.AuthorityHandlerContainer">
 		<constructor-arg>
 			<map>
-				<entry key="googlelocal">
-					<bean id="googleLocalAuthorityHandler"
-						class="it.smartcommunitylab.aac.test.GoogleAuthorityHandler">
-					</bean>
-				</entry>
+              <entry key="internal">
+                  <bean id="internalAuthorityHandler" class="it.smartcommunitylab.aac.authority.InternalAuthorityHandler"/>
+              </entry>
 			</map>
 		</constructor-arg>
 	</bean>
 
 	<import resource="datalayer.xml" />
+
+
+	<bean id="templateEngine" class="org.thymeleaf.TemplateEngine">
+		<property name="templateResolver">
+			<bean id="templateResolver"
+				class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+				<property name="prefix" value="/templates/" />
+				<property name="suffix" value=".html" />
+				<property name="characterEncoding" value="UTF-8" />
+				<property name="templateMode" value="HTML5" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>resources/internal</value>
+		</property>
+	</bean>
 
 </beans>

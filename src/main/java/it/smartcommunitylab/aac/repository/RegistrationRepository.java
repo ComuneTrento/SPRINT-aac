@@ -16,6 +16,8 @@
 
 package it.smartcommunitylab.aac.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -29,5 +31,6 @@ import it.smartcommunitylab.aac.model.Registration;
 public interface RegistrationRepository extends JpaRepository<Registration, Long>{
 
 	Registration findByEmail(String email);
+	List<Registration> findAllByEmail(String email);
 	Registration findByConfirmationKey(String confirmationKey);
 }

@@ -37,7 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import it.smartcommunitylab.aac.Config;
-import it.smartcommunitylab.aac.auth.fb.FBController;
 import it.smartcommunitylab.aac.common.PasswordHash;
 import it.smartcommunitylab.aac.model.Attribute;
 import it.smartcommunitylab.aac.model.Authority;
@@ -75,7 +74,7 @@ public class ProviderServiceAdapter {
 	
 	
 	@PostConstruct
-	private void init() throws JAXBException, IOException {
+	public void init() throws JAXBException, IOException {
 		attrAdapter.init();
 		try {
 			loadDefaultUsers();
@@ -112,7 +111,7 @@ public class ProviderServiceAdapter {
 
 					repository.save(reg);
 				} catch (Exception e) {
-					logger.error(e.getMessage(), e);
+					logger.error(e.getMessage());
 				}
 			}
 		}
@@ -146,8 +145,6 @@ public class ProviderServiceAdapter {
 		
 		// find user by identity attributes
 		List<User> users = userRepository.getUsersByAttributes(list);
-		if (users == null)
-			users = new ArrayList<User>();
 		if (users.size() > 1) {
 			list = extractIdentityAttributes(auth, attributes, false);
 			users = userRepository.getUsersByAttributes(list);
