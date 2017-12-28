@@ -45,8 +45,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import it.smartcommunitylab.aac.controller.BasicProfileController;
 import it.smartcommunitylab.aac.manager.ProviderServiceAdapter;
-import it.smartcommunitylab.aac.profile.model.BasicProfile;
-import it.smartcommunitylab.aac.profile.model.BasicProfiles;
+import it.smartcommunitylab.aac.profile.model.AccountProfile;
+import it.smartcommunitylab.aac.profile.model.AccountProfiles;
 import it.smartcommunitylab.aac.repository.UserRepository;
 
 /**
@@ -56,7 +56,7 @@ import it.smartcommunitylab.aac.repository.UserRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/applicationContext.xml")
 @WebAppConfiguration
-public class TestProfileService {
+public class TestAccountProfileService {
 
 	private static final String EMAIL_ATTRIBUTE = "OIDC_CLAIM_email";
 	private static final String AUTHORITY = "google";
@@ -121,95 +121,37 @@ public class TestProfileService {
 	
 	
 	@Test
-	public void testCurrentUserBasicProfile() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.get("/basicprofile/me")
+	public void testAccountProfiles() throws Exception {
+		RequestBuilder request = MockMvcRequestBuilders.get("/accountprofile/profiles")
+				.param("userIds", user.getId().toString())
 				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
 		ResultActions result = mockMvc.perform(request);
 		result.andExpect(MockMvcResultMatchers.status().isOk());
 		String string = result.andReturn().getResponse().getContentAsString();
-		BasicProfile profile = jsonMapper.readValue(string, BasicProfile.class);
-		Assert.assertNotNull(profile);
-		Assert.assertEquals(SURNAME, profile.getSurname());
-		Assert.assertEquals(NAME, profile.getName());
-		Assert.assertEquals(user.getId().toString(), profile.getUserId());
-		
-		// no auth
-		mockNoAuthentication();
-		request = MockMvcRequestBuilders.get("/basicprofile/me")
-				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
-		result = mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
-	}
-
-	@Test
-	public void testBasicProfile() throws Exception {
-		// existing
-		RequestBuilder request = MockMvcRequestBuilders.get("/basicprofile/all/{userId}",user.getId())
-				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
-		ResultActions result = mockMvc.perform(request);
-		result.andExpect(MockMvcResultMatchers.status().isOk());
-		String string = result.andReturn().getResponse().getContentAsString();
-		BasicProfile profile = jsonMapper.readValue(string, BasicProfile.class);
-		Assert.assertNotNull(profile);
-		Assert.assertEquals(SURNAME, profile.getSurname());
-		Assert.assertEquals(NAME, profile.getName());
-		Assert.assertEquals(user.getId().toString(), profile.getUserId());
-		// non existing
-		request = MockMvcRequestBuilders.get("/basicprofile/all/NONE")
-				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
-		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isInternalServerError());
+		AccountProfiles profiles = jsonMapper.readValue(string, AccountProfiles.class);
+		Assert.assertNotNull(profiles);
+		Assert.assertNotNull(profiles.getProfiles());		
+		Assert.assertEquals(1, profiles.getProfiles().size());
 	}
 	
 	@Test
-	public void testSearchBasicProfile() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.get("/basicprofile/all")
+	public void testAccountProfile() throws Exception {
+		RequestBuilder request = MockMvcRequestBuilders.get("/accountprofile/me")
 				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
 		ResultActions result = mockMvc.perform(request);
 		result.andExpect(MockMvcResultMatchers.status().isOk());
 		String string = result.andReturn().getResponse().getContentAsString();
-		BasicProfiles profiles = jsonMapper.readValue(string, BasicProfiles.class);
-		Assert.assertNotNull(profiles);
-		Assert.assertEquals(1, profiles.getProfiles().size());
-		// matching filter
-		request = MockMvcRequestBuilders.get("/basicprofile/all")
-				.param("filter", "ROSS")
-				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
-		result = mockMvc.perform(request);
-		result.andExpect(MockMvcResultMatchers.status().isOk());
-		string = result.andReturn().getResponse().getContentAsString();
-		profiles = jsonMapper.readValue(string, BasicProfiles.class);
-		Assert.assertNotNull(profiles);
-		Assert.assertEquals(1, profiles.getProfiles().size());
-		// non-matching filter
-		request = MockMvcRequestBuilders.get("/basicprofile/all")
-				.param("filter", "other")
-				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
-		result = mockMvc.perform(request);
-		result.andExpect(MockMvcResultMatchers.status().isOk());
-		string = result.andReturn().getResponse().getContentAsString();
-		profiles = jsonMapper.readValue(string, BasicProfiles.class);
-		Assert.assertNotNull(profiles);
-		Assert.assertEquals(0, profiles.getProfiles().size());
-		// empty filter
-		request = MockMvcRequestBuilders.get("/basicprofile/all")
-				.param("filter", "")
-				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
-		result = mockMvc.perform(request);
-		result.andExpect(MockMvcResultMatchers.status().isOk());
-		string = result.andReturn().getResponse().getContentAsString();
-		profiles = jsonMapper.readValue(string, BasicProfiles.class);
-		Assert.assertNotNull(profiles);
-		Assert.assertEquals(1, profiles.getProfiles().size());
-
+		AccountProfile profile = jsonMapper.readValue(string, AccountProfile.class);
+		Assert.assertNotNull(profile);
+		Assert.assertNotNull(profile.getAccountAttributes(AUTHORITY));		
+		Assert.assertEquals(3, profile.getAccountAttributes(AUTHORITY).size());
+		Assert.assertEquals(EMAIL, profile.getAttribute(AUTHORITY,EMAIL_ATTRIBUTE));
 		
-		request = MockMvcRequestBuilders.get("/basicprofile/profiles")
-				.param("userIds", user.getId().toString())
+		// no auth
+		mockNoAuthentication();
+		request = MockMvcRequestBuilders.get("/accountprofile/me")
 				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
-		result = mockMvc.perform(request);
-		result.andExpect(MockMvcResultMatchers.status().isOk());
-		string = result.andReturn().getResponse().getContentAsString();
-		profiles = jsonMapper.readValue(string, BasicProfiles.class);
-		Assert.assertNotNull(profiles);
-		Assert.assertEquals(1, profiles.getProfiles().size());
+		result = mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
 
 	}
 

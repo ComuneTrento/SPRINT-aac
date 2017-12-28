@@ -101,6 +101,7 @@
 
   <servlet-mapping>
     <servlet-name>default</servlet-name>
+    <url-pattern>/swagger-ui/*</url-pattern>
     <url-pattern>/img/*</url-pattern>
     <url-pattern>/fonts/*</url-pattern>
     <url-pattern>/css/*</url-pattern>

@@ -46,56 +46,32 @@ import it.smartcommunitylab.aac.profile.model.BasicProfiles;
  *
  */
 @Controller
-@RequestMapping("/basicprofile")
-public class BasicProfileController extends AbstractController {
+@RequestMapping("/accountprofile")
+public class AccountProfileController extends AbstractController {
 
 	private Log logger = LogFactory.getLog(getClass());
 	
 	@Autowired
 	private BasicProfileManager profileManager;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/all/{userId}")
-	public @ResponseBody
-	BasicProfile getUser(@PathVariable("userId") String userId) throws IOException {
-		return profileManager.getBasicProfileById(userId);
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/all")
-	public @ResponseBody
-	BasicProfiles searchUsers(@RequestParam(value = "filter", required = false) String fullNameFilter) {
-
-		List<BasicProfile> list;
-		if (fullNameFilter != null && !fullNameFilter.isEmpty()) {
-			list = profileManager.getUsers(fullNameFilter);
-
-		} else {
-			list = profileManager.getUsers();
-		}
-
-		BasicProfiles profiles = new BasicProfiles();
-		profiles.setProfiles(list);
-		return profiles;
-	}
-
 	@RequestMapping(method = RequestMethod.GET, value = "/me")
 	public @ResponseBody
-	BasicProfile findProfile(HttpServletResponse response) {
+	AccountProfile findAccountProfile(HttpServletResponse response) {
 		Long user = getUserId();
 		if (user == null) {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			return null;
 		}
-		return profileManager.getBasicProfileById(user.toString());
+		return profileManager.getAccountProfileById(user.toString());
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/profiles")
 	public @ResponseBody
-	BasicProfiles findProfiles(@RequestParam List<String> userIds) {
-		BasicProfiles profiles = new BasicProfiles();
-		profiles.setProfiles(profileManager.getUsers(userIds));
+	AccountProfiles findAccountProfiles(@RequestParam List<String> userIds) throws IOException {
+		AccountProfiles profiles = new AccountProfiles();
+		profiles.setProfiles(profileManager.getAccountProfilesById(userIds));
 		return profiles;
 	}
-
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)

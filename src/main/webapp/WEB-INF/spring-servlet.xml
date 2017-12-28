@@ -289,4 +289,8 @@
       <value>resources/internal</value>
     </property>
   </bean>
+  
+  <!-- SWAGGER -->
+	<bean id="swaggerConfiguration" class="it.smartcommunitylab.aac.SwaggerConfig"/>
+  
 </beans>

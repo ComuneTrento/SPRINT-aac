@@ -30,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -55,7 +56,7 @@ public class ResourceAccessController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/resources/access")
+	@RequestMapping(value="/resources/access", method=RequestMethod.GET)
 	public @ResponseBody Boolean canAccessResource(@RequestHeader("Authorization") String token, @RequestParam String scope, HttpServletRequest request) {
 		try {
 			String parsedToken = resourceFilterHelper.parseTokenFromRequest(request);

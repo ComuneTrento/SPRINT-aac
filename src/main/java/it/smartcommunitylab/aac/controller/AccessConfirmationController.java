@@ -112,4 +112,5 @@ public class AccessConfirmationController {
 	public void setClientDetailsService(ClientDetailsService clientDetailsService) {
 		this.clientDetailsService = clientDetailsService;
 	}
+
 }
