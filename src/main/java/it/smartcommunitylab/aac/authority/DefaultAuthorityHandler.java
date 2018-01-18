@@ -37,6 +37,7 @@ public class DefaultAuthorityHandler implements AuthorityHandler {
 	public DefaultAuthorityHandler(boolean testMode) {
 		this.testMode = testMode;
 	}
+	
 
 	@Override
 	public Map<String, String> extractAttributes(HttpServletRequest request,
@@ -84,6 +85,11 @@ public class DefaultAuthorityHandler implements AuthorityHandler {
 			param = request.getHeader(key);
 		}
 		return param;
+	}
+
+
+	public void setTestMode(boolean testMode) {
+		this.testMode = testMode;
 	}
 
 }

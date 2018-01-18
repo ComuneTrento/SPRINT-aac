@@ -18,6 +18,7 @@ package it.smartcommunitylab.aac.test.component;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,6 +29,9 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.smartcommunitylab.aac.authority.AuthorityHandlerContainer;
+import it.smartcommunitylab.aac.authority.DefaultAuthorityHandler;
+import it.smartcommunitylab.aac.jaxbmodel.AuthorityMapping;
 import it.smartcommunitylab.aac.manager.AttributesAdapter;
 import it.smartcommunitylab.aac.manager.ProviderServiceAdapter;
 import it.smartcommunitylab.aac.model.Attribute;
@@ -55,7 +59,10 @@ public class AuthorityMappingTest {
 	private AuthorityRepository authRepository;
 	@Autowired
 	private AttributesAdapter attributesAdapter;
-
+	@Autowired
+	private AuthorityHandlerContainer handlerContainer;
+	
+	
 	@Before
 	public void init() {
 		List<User> users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
@@ -111,4 +118,53 @@ public class AuthorityMappingTest {
 		Assert.assertNotNull(found);
 		Assert.assertTrue(found.size() > 0);
 	}
+	
+	@Test
+	public void testInternalMapper() {
+		MockHttpServletRequest req = new MockHttpServletRequest();
+		req.addParameter("email", "mario.rossi2@gmail.com");
+		try {
+			attributesAdapter.getAttributes("internal", new HashMap<String, String>(), req);
+			Assert.assertTrue(false);
+		} catch (Exception e) {
+		}
+		try {
+			attributesAdapter.getAttributes("internal", Collections.singletonMap("email", "mario.rossi2@gmail.com"), null);
+			Assert.assertTrue(false);
+		} catch (Exception e) {
+		}
+		
+	}
+	
+	@Test
+	public void testDefaultMapper() {
+		MockHttpServletRequest req = new MockHttpServletRequest();
+		req.addParameter("OIDC_CLAIM_email", "mario.rossi2@gmail.com");
+		Map<String, String> attributes = attributesAdapter.getAttributes("google", new HashMap<String, String>(), req);
+		Assert.assertTrue(attributes.size() > 0);
+
+		attributes = attributesAdapter.getAttributes("google", Collections.singletonMap("OIDC_CLAIM_email", "mario.rossi2@gmail.com"), null);
+		Assert.assertTrue(attributes.size() > 0);
+
+		DefaultAuthorityHandler handler = (DefaultAuthorityHandler) handlerContainer.getAuthorityHandler("google");
+		handler.setTestMode(true);
+		req = new MockHttpServletRequest();
+		req.addParameter("OIDC_CLAIM_email", "mario.rossi2@gmail.com");
+		attributes = attributesAdapter.getAttributes("google", new HashMap<String, String>(), req);
+		Assert.assertTrue(attributes.size() > 0);
+
+		attributes = attributesAdapter.getAttributes("google", Collections.singletonMap("OIDC_CLAIM_email", "mario.rossi2@gmail.com"), null);
+		Assert.assertTrue(attributes.size() > 0);
+		
+		AuthorityMapping mapping = attributesAdapter.getAuthority("google");
+		handler.setTestMode(false);
+		mapping.setUseParams(false);
+		req = new MockHttpServletRequest();
+		req.setAttribute("OIDC_CLAIM_email", "mario.rossi2@gmail.com");
+		attributes = handler.extractAttributes(req, new HashMap<String, String>(), mapping);
+		Assert.assertTrue(attributes.size() > 0);
+		
+		
+	}
 }
+
