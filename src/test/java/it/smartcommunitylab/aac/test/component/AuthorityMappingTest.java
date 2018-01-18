@@ -15,6 +15,7 @@
  ******************************************************************************/
 package it.smartcommunitylab.aac.test.component;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,8 +28,12 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.smartcommunitylab.aac.manager.AttributesAdapter;
 import it.smartcommunitylab.aac.manager.ProviderServiceAdapter;
+import it.smartcommunitylab.aac.model.Attribute;
+import it.smartcommunitylab.aac.model.Authority;
 import it.smartcommunitylab.aac.model.User;
+import it.smartcommunitylab.aac.repository.AuthorityRepository;
 import it.smartcommunitylab.aac.repository.UserRepository;
 
 /**
@@ -46,6 +51,10 @@ public class AuthorityMappingTest {
 	private ProviderServiceAdapter providerServiceAdapter;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private AuthorityRepository authRepository;
+	@Autowired
+	private AttributesAdapter attributesAdapter;
 
 	@Before
 	public void init() {
@@ -61,7 +70,7 @@ public class AuthorityMappingTest {
 		req.addParameter("OIDC_CLAIM_given_name", "mario");
 		req.addParameter("OIDC_CLAIM_family_name", "rossi");
 		req.addParameter("OIDC_CLAIM_email", "mario.rossi@gmail.com");
-		
+
 		providerServiceAdapter.updateUser("google", new HashMap<String, String>(), req);
 		List<User> users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
 		Assert.assertNotNull(users);
@@ -72,7 +81,7 @@ public class AuthorityMappingTest {
 		users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
 		Assert.assertNotNull(users);
 		Assert.assertEquals(1, users.size());
-
+		
 		req = new MockHttpServletRequest();
 		req.addParameter("OIDC_CLAIM_given_name", "mario");
 		req.addParameter("OIDC_CLAIM_family_name", "rossi");
@@ -82,6 +91,24 @@ public class AuthorityMappingTest {
 		users = userRepository.findByFullNameIgnoreCaseLike("mario rossi");
 		Assert.assertNotNull(users);
 		Assert.assertEquals(2, users.size());
-
+		
+	}
+	
+	@Test
+	public void testAutohrities() {
+		Assert.assertTrue(attributesAdapter.getAuthorityUrls().size() > 0);
+		Assert.assertTrue(attributesAdapter.getWebAuthorityUrls().size() > 0);
+		Assert.assertNotNull(attributesAdapter.getAuthority("google"));
+		
+		Attribute a = new Attribute();
+		
+		Authority authority = authRepository.findByRedirectUrl("google");
+		a.setAuthority(authority);
+		a.setKey("OIDC_CLAIM_email");
+		Assert.assertTrue(attributesAdapter.isIdentityAttr(a));
+		
+		List<Attribute> found = attributesAdapter.findAllIdentityAttributes(authority, Collections.singletonMap("OIDC_CLAIM_email", "mario.rossi2@gmail.com"), true);
+		Assert.assertNotNull(found);
+		Assert.assertTrue(found.size() > 0);
 	}
 }

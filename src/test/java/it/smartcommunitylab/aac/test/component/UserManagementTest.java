@@ -111,6 +111,7 @@ public class UserManagementTest {
 			return;
 		}
 
+		
 		// find user: not confirmed
 		try {
 			service.getUser(EMAIL, PWD);
@@ -130,6 +131,14 @@ public class UserManagementTest {
 		} catch (RegistrationException e1) {
 			Assert.assertTrue("Error testing resend confirm", false);
 		}
+		
+		// resend confirm not exists
+		try {
+			service.resendConfirm("abc");
+			Assert.assertTrue(false);
+		} catch (RegistrationException e1) {
+		}
+
 		
 		// confirm
 		try {
@@ -186,7 +195,14 @@ public class UserManagementTest {
 		} catch (RegistrationException e1) {
 			Assert.assertTrue("Error testing reset password", false);
 		}
-		
+
+		// reset
+		try {
+			service.resetPassword("abc");
+			Assert.assertTrue(false);
+		} catch (RegistrationException e1) {
+		}
+
 		// find user
 		try {
 			register = service.getUser(EMAIL, PWD);
