@@ -1,0 +1,1 @@
+${ADMIN_TYPE};${ADMIN_EMAIL};admin
