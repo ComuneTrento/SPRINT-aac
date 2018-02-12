@@ -19,7 +19,7 @@ component APIs (e.g., logging, CDV, SF).
 - J2EE Servlet Container (tested on Apache Tomcat 7.*+)
 - Apache Maven (3.0+)
 
-## Installation
+## Installation without docker
 
 **MySQL Installation**
   1. Create a new schema (for example **acprovider**).
@@ -40,7 +40,24 @@ This will create the *aac.war* in *target* folder. The arcihve is ready for depl
 The AAC management console is available at 
 
    http://localhost:8080/aac
- 
+
+
+## Installation with docker
+
+### Configuration
+
+Configure properties in:
+* `docker-configs/mysql.env`
+* `docker-configs/aac.env`
+
+### Build and run
+
+From the root of the project:
+* Try the system executing `docker-compose up`
+* Run as a daemon executing `docker-compose start`
+* Stop the daemon executing `docker-compose stop`
+
+
 ## Generic Configuration
 
 The configuration properties of the project are available in */main/resources/commoncore.properties*. They include
