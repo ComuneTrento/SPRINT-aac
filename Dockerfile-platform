@@ -1,0 +1,32 @@
+FROM maven:3.5.2-jdk-8-alpine
+
+WORKDIR /app
+
+ARG release
+
+
+# install git client
+RUN apk --update add git
+
+# install tomcat
+RUN wget -O apache-tomcat.tgz http://it.apache.contactlab.it/tomcat/tomcat-8/v8.5.28/bin/apache-tomcat-8.5.28.tar.gz
+RUN tar xzvf apache-tomcat.tgz
+RUN rm apache-tomcat.tgz
+
+# clone the project
+RUN git clone https://github.com/SIMPATICOProject/aac.git
+
+WORKDIR aac
+
+#checkout release tag
+RUN git checkout $release
+
+
+# copy props for docker usage
+RUN cp docker-configs/commoncore.properties src/main/resources/commoncore.properties
+RUN cp docker-configs/admin.txt src/main/webapp/admin.txt
+
+CMD mvn clean package -Dmaven.test.skip=true \
+&& cp target/aac.war ../apache-tomcat-8.5.28/webapps && ../apache-tomcat-8.5.28/bin/catalina.sh run
+
+EXPOSE 8080
