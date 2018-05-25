@@ -8,7 +8,7 @@ COPY docker-configs/commoncore.properties src/main/resources/commoncore.properti
 COPY docker-configs/admin.txt src/main/webapp/admin.txt
 
 # install tomcat
-RUN wget -O apache-tomcat.tgz http://it.apache.contactlab.it/tomcat/tomcat-8/v8.5.28/bin/apache-tomcat-8.5.28.tar.gz
+RUN wget -O apache-tomcat.tgz https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.28/bin/apache-tomcat-8.5.28.tar.gz
 RUN tar xzvf apache-tomcat.tgz
 RUN rm apache-tomcat.tgz
 
