@@ -44,11 +44,7 @@ public class BasicProfileManager {
 	 * @return
 	 */
 	public BasicProfile getBasicProfileById(String userId) {
-		try {
-			return BasicProfileConverter.toBasicProfile(userRepository.findOne(Long.parseLong(userId)));
-		} catch (Exception e) {
-			throw new IllegalStateException("User with id "+userId +" does not exist");
-		}
+		return BasicProfileConverter.toBasicProfile(userRepository.findOne(Long.parseLong(userId)));
 	}
 	/**
 	 * returns all users in the
@@ -58,11 +54,7 @@ public class BasicProfileManager {
 	 * @throws CommunityManagerException
 	 */
 	public List<BasicProfile> getUsers() {
-		try {
-			return BasicProfileConverter.toBasicProfile(userRepository.findAll());
-		} catch (Exception e) {
-			throw new IllegalStateException("Problem reading users: "+e.getMessage());
-		}
+		return BasicProfileConverter.toBasicProfile(userRepository.findAll());
 	}
 	/**
 	 * returns all minimal set of
@@ -76,41 +68,26 @@ public class BasicProfileManager {
 	 * @throws CommunityManagerException
 	 */
 	public List<BasicProfile> getUsers(String fullNameFilter) {
-		try {
-			return BasicProfileConverter.toBasicProfile(userRepository.findByFullNameIgnoreCaseLike("%"+fullNameFilter+"%"));
-		} catch (Exception e) {
-			throw new IllegalStateException("Problem reading users: "+e.getMessage());
-		}
+		return BasicProfileConverter.toBasicProfile(userRepository.findByFullNameIgnoreCaseLike("%"+fullNameFilter+"%"));
 	}
 	/**
 	 * @param userIds
 	 * @return
 	 */
 	public List<BasicProfile> getUsers(List<String> userIds) {
-		if (userIds != null) {
+		if (userIds != null && !userIds.isEmpty()) {
 			List<BasicProfile> list = new ArrayList<BasicProfile>();
 			for (String userId : userIds) {
-				try {
-					list.add(getBasicProfileById(userId));
-				} catch (Exception e) {
-					throw new IllegalStateException("Problem reading users: "+e.getMessage());
+				BasicProfile bp = getBasicProfileById(userId);
+				if (bp != null) {
+					list.add(bp);
 				}
 			}
 			return list;
 		}
 		return Collections.emptyList();
 	}
-	/**
-	 * @param socialId
-	 * @return
-	 */
-	public BasicProfile getBasicProfileBySocialId(String socialId) {
-		try {
-			return BasicProfileConverter.toBasicProfile(userRepository.findBySocialId(socialId));
-		} catch (Exception e) {
-			throw new IllegalStateException("Problem reading users: "+e.getMessage());
-		}
-	}
+
 	/**
 	 * @param userId
 	 * @return
@@ -125,9 +102,12 @@ public class BasicProfileManager {
 	 */
 	public List<AccountProfile> getAccountProfilesById(List<String> userIds) {
 		List<AccountProfile> list = new ArrayList<AccountProfile>();
-		if (userIds != null) {
+		if (userIds != null && !userIds.isEmpty()) {
 			for (String userId : userIds) {
-				list.add(getAccountProfileById(userId));
+				AccountProfile ap = getAccountProfileById(userId);
+				if (ap != null) {
+					list.add(ap);
+				}
 			}
 		}
 		return list;

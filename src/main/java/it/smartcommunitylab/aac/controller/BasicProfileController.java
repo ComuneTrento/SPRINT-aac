@@ -36,8 +36,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import it.smartcommunitylab.aac.manager.BasicProfileManager;
-import it.smartcommunitylab.aac.profile.model.AccountProfile;
-import it.smartcommunitylab.aac.profile.model.AccountProfiles;
 import it.smartcommunitylab.aac.profile.model.BasicProfile;
 import it.smartcommunitylab.aac.profile.model.BasicProfiles;
 

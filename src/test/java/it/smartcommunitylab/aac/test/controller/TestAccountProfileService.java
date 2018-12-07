@@ -132,6 +132,29 @@ public class TestAccountProfileService {
 		Assert.assertNotNull(profiles);
 		Assert.assertNotNull(profiles.getProfiles());		
 		Assert.assertEquals(1, profiles.getProfiles().size());
+		
+		request = MockMvcRequestBuilders.get("/accountprofile/profiles")
+				.param("userIds", "")
+				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
+		result = mockMvc.perform(request);
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		string = result.andReturn().getResponse().getContentAsString();
+		profiles = jsonMapper.readValue(string, AccountProfiles.class);
+		Assert.assertNotNull(profiles);
+		Assert.assertNotNull(profiles.getProfiles());		
+		Assert.assertEquals(0, profiles.getProfiles().size());
+
+		request = MockMvcRequestBuilders.get("/accountprofile/profiles")
+				.param("userIds", "-1")
+				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
+		result = mockMvc.perform(request);
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		string = result.andReturn().getResponse().getContentAsString();
+		profiles = jsonMapper.readValue(string, AccountProfiles.class);
+		Assert.assertNotNull(profiles);
+		Assert.assertNotNull(profiles.getProfiles());		
+		Assert.assertEquals(0, profiles.getProfiles().size());
+
 	}
 	
 	@Test

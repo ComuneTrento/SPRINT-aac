@@ -28,21 +28,16 @@ import it.smartcommunitylab.aac.profile.model.BasicProfile;
  */
 public class BasicProfileConverter {
 
-	public static List<BasicProfile> toBasicProfile(List<User> users) throws Exception {
+	public static List<BasicProfile> toBasicProfile(List<User> users) {
 		List<BasicProfile> minProfiles = new ArrayList<BasicProfile>();
-		try {
-			for (User temp : users) {
-				minProfiles.add(BasicProfileConverter.toBasicProfile(temp));
-			}
-		} catch (Exception e) {
-			throw e;
+		for (User temp : users) {
+			minProfiles.add(BasicProfileConverter.toBasicProfile(temp));
 		}
 
 		return minProfiles;
 	}
 
-	public static BasicProfile toBasicProfile(User user)
-			throws Exception {
+	public static BasicProfile toBasicProfile(User user) {
 		if (user == null) {
 			return null;
 		}

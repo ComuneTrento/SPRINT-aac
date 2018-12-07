@@ -211,6 +211,16 @@ public class TestProfileService {
 		Assert.assertNotNull(profiles);
 		Assert.assertEquals(1, profiles.getProfiles().size());
 
+		request = MockMvcRequestBuilders.get("/basicprofile/profiles")
+				.param("userIds", "")
+				.header("Accept", MediaType.APPLICATION_JSON_VALUE);
+		result = mockMvc.perform(request);
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		string = result.andReturn().getResponse().getContentAsString();
+		profiles = jsonMapper.readValue(string, BasicProfiles.class);
+		Assert.assertNotNull(profiles);
+		Assert.assertEquals(0, profiles.getProfiles().size());
+
 	}
 
 }
