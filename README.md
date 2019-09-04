@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/SIMPATICOProject/aac.svg?branch=master)](https://travis-ci.org/SIMPATICOProject/aac)
+[![Build Status](https://travis-ci.org/SPRINT-Project/aac.svg?branch=master)](https://travis-ci.org/SIMPATICOProject/aac)
 
-[![codecov](https://codecov.io/gh/SIMPATICOProject/aac/branch/master/graph/badge.svg)](https://codecov.io/gh/SIMPATICOProject/aac)
+[![codecov](https://codecov.io/gh/SPRINT-Project/aac/branch/master/graph/badge.svg)](https://codecov.io/gh/SIMPATICOProject/aac)
 
 # AAC
 Authentication and Authorization Control Module.
