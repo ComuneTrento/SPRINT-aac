@@ -1,0 +1,74 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+name: AAC
+applicationSuite: SPRINT
+url: 'https://github.com/SPRINT-Project/aac'
+releaseDate: '2019-09-09'
+isBasedOn: 'https://github.com/SIMPATICOProject/aac'
+softwareVersion: 1.1.1
+developmentStatus: stable
+softwareType: standalone/backend
+platforms:
+  - windows
+  - mac
+  - linux
+categories:
+  - it-security
+  - resource-management
+maintenance:
+  type: none
+  contacts:
+    - name: Marco Pistore
+      email: pistore@fbk.eu
+      affiliation: Fondazione Bruno Kessler
+legal:
+  license: Apache-2.0
+  mainCopyrightOwner: 'Smart Community Lab, FBK and Comune di Trento'
+  repoOwner: 'Smart Community Lab, FBK and Comune di Trento'
+intendedAudience:
+  scope:
+    - government
+  countries:
+    - it
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - it
+it:
+  riuso:
+    codiceIPA: c_l378
+  conforme:
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: true
+    gdpr: true
+  piattaforme:
+    spid: true
+description:
+  it:
+    genericName: Authentication and Authorization Co
+    apiDocumentation: 'https://github.com/SPRINT-Project/aac'
+    shortDescription: >-
+      Authentication and Authorization Component: fornisce il supporto per il
+      protocollo di autenticazione OAuth2.0 e funge da server di autorizzazione 
+    longDescription: >
+      Questo tool fa parte della famiglia di diversi strumenti messi a
+      disposizione dal progetto SPRINT: Adaptation Engine, IFE, CPD e AAC.  Il
+      progetto SPRINT intende predisporre un kit che valorizza e porta in riuso
+      alcuni componenti sviluppanti dal progetto SIMPATICO.  
+
+
+      Questo tool, derivato dal progetto SIMPATICO,  fornisce il supporto per il
+      protocollo di autenticazione OAuth2.0 e funge da server di autorizzazione
+      per l'accesso alle risorse della piattaforma e alle API. Intermedia
+      inoltre le attività di provisioning dell'identità, consentendo
+      l'integrazione con i sistemi di autenticazione specifici per città o
+      nazionali attraverso la sua architettura modulare. Il componente AAC è
+      distribuito come un'applicazione Web Java in un contenitore JEE standard
+      (ad es. Apache Tomcat). Fornisce l'integrazione immediata dei sistemi di
+      autenticazione di Google e Facebook.
+    features:
+      - Authentication
+      - Authorization
