@@ -18,8 +18,10 @@ platforms:
 categories:
   - it-security
   - resource-management
+usedBy:
+  - Comune di Trento
 maintenance:
-  type: none
+  type: internal
   contacts:
     - name: Marco Pistore
       email: pistore@fbk.eu
@@ -44,6 +46,7 @@ it:
     lineeGuidaDesign: false
     misureMinimeSicurezza: true
     gdpr: true
+    modelloInteroperabilita: true
   piattaforme:
     spid: true
 description:
