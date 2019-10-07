@@ -53,25 +53,26 @@ description:
   it:
     genericName: Authentication and Authorization Co
     apiDocumentation: 'https://github.com/SPRINT-Project/aac'
-    shortDescription: >-
-      Authentication and Authorization Component: fornisce il supporto per il
-      protocollo di autenticazione OAuth2.0 e funge da server di autorizzazione 
+    shortDescription: Authentication and Authorization Component
     longDescription: >
-      Questo tool fa parte della famiglia di diversi strumenti messi a
-      disposizione dal progetto SPRINT: Adaptation Engine, IFE, CPD e AAC.  Il
-      progetto SPRINT intende predisporre un kit che valorizza e porta in riuso
-      alcuni componenti sviluppanti dal progetto SIMPATICO.  
+      This tool is provided on behalf of the SPRINT project. SPRINT project
+      intends to prepare a kit that enhances and re-uses some components
+      developed by the SIMPATICO project.
 
 
-      Questo tool, derivato dal progetto SIMPATICO,  fornisce il supporto per il
-      protocollo di autenticazione OAuth2.0 e funge da server di autorizzazione
-      per l'accesso alle risorse della piattaforma e alle API. Intermedia
-      inoltre le attività di provisioning dell'identità, consentendo
-      l'integrazione con i sistemi di autenticazione specifici per città o
-      nazionali attraverso la sua architettura modulare. Il componente AAC è
-      distribuito come un'applicazione Web Java in un contenitore JEE standard
-      (ad es. Apache Tomcat). Fornisce l'integrazione immediata dei sistemi di
-      autenticazione di Google e Facebook.
+      The Authentication and Authorization Component (AAC) provides support for
+      the OAuth2.0 authentication protocol and acts as an authorization server
+      for access to platform resources and APIs. 
+
+
+      It also mediates identity provisioning activities, allowing integration
+      with city or national specific authentication systems through its modular
+      architecture. It provides immediate integration of Google and Facebook
+      authentication systems.
+
+
+      AAC component is distributed as a Java web application in a standard JEE
+      container (eg Apache Tomcat). 
     features:
       - Authentication
       - Authorization
