@@ -8,7 +8,7 @@ applicationSuite: SPRINT
 url: 'https://github.com/SPRINT-Project/aac'
 releaseDate: '2019-09-09'
 isBasedOn: 'https://github.com/SIMPATICOProject/aac'
-softwareVersion: 1.1.1
+softwareVersion: 1.1.0
 developmentStatus: stable
 softwareType: standalone/backend
 platforms:
