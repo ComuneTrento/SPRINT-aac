@@ -2,7 +2,53 @@
 
 [![codecov](https://codecov.io/gh/SPRINT-Project/aac/branch/master/graph/badge.svg)](https://codecov.io/gh/SPRINT-Project/aac)
 
-# AAC
+# SPRINT - AAC
+
+Modulo che abilita Authentication e Authorization Control nel contesto del progetto SIMPATICO/SPRINT
+
+# Descrizione
+
+Il progetto SPRINT intende valorizzare alcuni risultati del progetto SIMPATICO (https://www.simpatico-project.eu/) volti a migliorare e semplificare l’interazione tra cittadino e servizi online. L’obiettivo del progetto è di creare un kit che permetta una facile integrazione di alcune funzioni avanzate di SIMPATICO in un generico portale della Pubblica Amministrazione e/o in un servizio online. 
+
+Authentication e Authorization Control component (ACC), che fa parte della famiglia di tools messa in riuso, e' il componente che abilita la gestione dell'autenticazione e della gestione degli accessi nei tool messi in riuso.  
+
+La descrizione completa e tecnica di utilizzo dei diversi componenti si trova nel documento [di progetto](dic/BP-OR-AP-06_v1.0.pdf)
+
+
+## Altri riferimenti
+
+Per maggiori informazioni è possibile consultare:
+ * documento [di progetto](dic/BP-OR-AP-06_v1.0.pdf)
+
+## Product status
+
+Il prodotto è stabile e production ready e usato in produzione dal Comune di Trento. Lo sviluppo avviene sia su richiesta degli Enti utilizzatori, sia su iniziativa autonoma del maintainer.
+
+## Struttura del repository
+
+Il repository è organizzato con una struttura di directory tipica dei progetti Java Apache Maven.
+ * nella cartella src sono presenti i sorgenti
+ * Nella directory doc e' presente la documentazione del progetto SPRINT
+
+## Copyright:
+
+  license: Apache 2.0
+  mainCopyrightOwner: 'Smart Community Lab, FBK and Comune di Trento'
+  repoOwner: 'Smart Community Lab, FBK and Comune di Trento'
+
+## Soggetti incaricati del mantenimento
+
+  name: Marco Pistore
+  email: pistore@fbk.eu
+  affiliation: Fondazione Bruno Kessler
+
+## Segnalazioni di sicurezza
+Le segnalazioni di sicurezza vanno inviate all'indirizzo pistore@fbk.eu
+
+## Prerequisiti e dipendenze
+
+# Technical Documentation
+
 Authentication and Authorization Control Module.
 
 This module exposes the OAuth2.0 protocol functionality for user authentication and
@@ -269,15 +315,3 @@ update:
 
     UPDATE registration SET confirmed = 1
  	
-## Copyright:
-  license: Apache-2.0
-  mainCopyrightOwner: 'Smart Community Lab, FBK and Comune di Trento'
-  repoOwner: 'Smart Community Lab, FBK and Comune di Trento'
-
-## Soggetti incaricati del mantenimento
-  name: Marco Pistore
-  email: pistore@fbk.eu
-  affiliation: Fondazione Bruno Kessler
-
-## Segnalazioni di sicurezza
-Le segnalazioni di sicurezza vanno inviate all'indirizzo pistore@fbk.eu
