@@ -18,7 +18,7 @@ La descrizione completa e tecnica di utilizzo dei diversi componenti si trova ne
 ## Altri riferimenti
 
 Per maggiori informazioni è possibile consultare:
- * documento [di progetto](dic/BP-OR-AP-06_v1.0.pdf)
+ * documento [di progetto](doc/BP-OR-AP-06_v1.0.pdf)
 
 ## Product status
 
