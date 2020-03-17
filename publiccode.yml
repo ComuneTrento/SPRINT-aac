@@ -5,7 +5,7 @@
 publiccodeYmlVersion: '0.2'
 name: AAC
 applicationSuite: SPRINT
-url: 'https://github.com/SPRINT-Project/aac'
+url: 'https://github.com/ComuneTrento/SPRINT-aac'
 releaseDate: '2019-09-09'
 isBasedOn: 'https://github.com/SIMPATICOProject/aac'
 softwareVersion: 1.1.0
