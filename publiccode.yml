@@ -3,76 +3,77 @@
 # More info at https://github.com/italia/publiccode.yml
 
 publiccodeYmlVersion: '0.2'
-name: AAC
 applicationSuite: SPRINT
-url: 'https://github.com/ComuneTrento/SPRINT-aac'
-releaseDate: '2019-09-09'
-isBasedOn: 'https://github.com/SIMPATICOProject/aac'
-softwareVersion: 1.1.0
-developmentStatus: stable
-softwareType: standalone/backend
-platforms:
-  - windows
-  - mac
-  - linux
 categories:
   - it-security
   - resource-management
-usedBy:
-  - Comune di Trento
-maintenance:
-  type: internal
-  contacts:
-    - name: Marco Pistore
-      email: pistore@fbk.eu
-      affiliation: Fondazione Bruno Kessler
+description:
+  it:
+    apiDocumentation: 'https://github.com/SPRINT-Project/aac'
+    features:
+      - Authentication
+      - Authorization
+    genericName: Authentication and Authorization Co
+    longDescription: >
+      L’Authentication e Authorization Control component (AAC) fa parte del
+      progetto SPRINT che intende valorizzare alcuni risultati del progetto
+      SIMPATICO (https://www.simpatico-project.eu/) volti a migliorare e
+      semplificare l’interazione tra cittadino e servizi online. 
+
+
+      L’obiettivo di SPRINT è di creare un kit che permetta una facile
+      integrazione di alcune funzioni avanzate di SIMPATICO in un generico
+      portale della Pubblica Amministrazione e/o in un servizio online. 
+
+
+      Authentication e Authorization Control component (ACC) e' il componente
+      che abilita la gestione dell'autenticazione e della gestione degli accessi
+      nei tool messi in riuso.  
+    shortDescription: 'Gestore degli accessi '
+developmentStatus: stable
+intendedAudience:
+  countries:
+    - it
+  scope:
+    - government
+isBasedOn:
+  - 'https://github.com/SIMPATICOProject/aac'
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: true
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: true
+  riuso:
+    codiceIPA: c_l378
 legal:
   license: Apache-2.0
   mainCopyrightOwner: 'Smart Community Lab, FBK and Comune di Trento'
   repoOwner: 'Smart Community Lab, FBK and Comune di Trento'
-intendedAudience:
-  scope:
-    - government
-  countries:
-    - it
 localisation:
-  localisationReady: true
   availableLanguages:
     - it
-it:
-  riuso:
-    codiceIPA: c_l378
-  conforme:
-    lineeGuidaDesign: false
-    misureMinimeSicurezza: true
-    gdpr: true
-    modelloInteroperabilita: true
-  piattaforme:
-    spid: true
-description:
-  it:
-    genericName: Authentication and Authorization Co
-    apiDocumentation: 'https://github.com/SPRINT-Project/aac'
-    shortDescription: Authentication and Authorization Component
-    longDescription: >
-      This tool is provided on behalf of the SPRINT project. SPRINT project
-      intends to prepare a kit that enhances and re-uses some components
-      developed by the SIMPATICO project.
-
-
-      The Authentication and Authorization Component (AAC) provides support for
-      the OAuth2.0 authentication protocol and acts as an authorization server
-      for access to platform resources and APIs. 
-
-
-      It also mediates identity provisioning activities, allowing integration
-      with city or national specific authentication systems through its modular
-      architecture. It provides immediate integration of Google and Facebook
-      authentication systems.
-
-
-      AAC component is distributed as a Java web application in a standard JEE
-      container (eg Apache Tomcat). 
-    features:
-      - Authentication
-      - Authorization
+  localisationReady: true
+maintenance:
+  contacts:
+    - affiliation: Fondazione Bruno Kessler
+      email: pistore@fbk.eu
+      name: Marco Pistore
+  type: internal
+name: Authenticazione e Autorizzazione
+platforms:
+  - windows
+  - mac
+  - linux
+releaseDate: '2019-09-09'
+softwareType: standalone/backend
+softwareVersion: 1.1.0
+url: 'https://github.com/ComuneTrento/SPRINT-aac'
+usedBy:
+  - Comune di Trento
